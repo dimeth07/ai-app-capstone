@@ -1,10 +1,10 @@
 # Project Plan
 
 ## 1. Me
-- Name: [Your name]
+- Name: [Dimeth Senevirathne]
 - Student ID: [Your ID]
-- GitHub handle: [your-username]
-- Email: [your email]
+- GitHub handle: [dimeth07]
+- Email: [dimeth122@gmail.com]
 - Project repo: [paste your repo URL]
 
 ## 2. My weekly working slot

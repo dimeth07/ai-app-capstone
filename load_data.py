@@ -1,5 +1,5 @@
 # load_data.py
-# Proves the data loads. 
+# Proves the SMS Spam data loads. 
 # Run: python load_data.py
 
 import pandas as pd
@@ -7,23 +7,24 @@ import numpy as np
 import os
 
 # ==========================================
-# STEP 1: Create fake data (so you can test)
+# STEP 1: Create fake SMS data for testing
 # ==========================================
-print("Generating 1,200 fake samples for testing...")
-np.random.seed(42) # Keeps the random numbers the same every time
+print("Generating 5,574 fake SMS samples for testing...")
+np.random.seed(42) # Keeps random numbers the same every time
 
-n_samples = 1200
+n_samples = 5574
 
-# Create a dictionary with fake data
-data = {
-    'id': range(1, n_samples + 1),
-    'feature_1': np.random.normal(0, 1, n_samples), # Random numbers
-    'feature_2': np.random.randint(0, 100, n_samples), # Random integers
-    'category': np.random.choice(['A', 'B', 'C'], n_samples), # Random categories
-    'target': np.random.choice([0, 1], n_samples, p=[0.7, 0.3]) # 0 or 1
-}
+# 1 = spam, 0 = ham (86% ham, 14% spam)
+labels = np.random.choice(['ham', 'spam'], n_samples, p=[0.86, 0.14])
 
-df = pd.DataFrame(data)
+# Create fake text messages
+messages = ["This is a fake SMS message number " + str(i) for i in range(n_samples)]
+
+# Create the DataFrame
+df = pd.DataFrame({
+    'label': labels,
+    'message': messages
+})
 
 # ==========================================
 # STEP 2: Save it to a CSV file
@@ -32,14 +33,14 @@ df = pd.DataFrame(data)
 os.makedirs("data/raw", exist_ok=True)
 
 # Save the fake data to a file
-df.to_csv("data/raw/sample_data.csv", index=False)
-print("Fake data saved to: data/raw/sample_data.csv\n")
+df.to_csv("data/raw/sms_spam.csv", index=False)
+print("Fake data saved to: data/raw/sms_spam.csv\n")
 
 # ==========================================
 # STEP 3: "Load" the data (this is the real proof)
 # ==========================================
-# In your real project, you will change this line to point to your real data
-df = pd.read_csv("data/raw/sample_data.csv")
+# When you get the REAL dataset, change this line to point to it
+df = pd.read_csv("data/raw/sms_spam.csv")
 
 # ==========================================
 # STEP 4: Print proof that it loaded
@@ -49,17 +50,13 @@ print("Rows:", len(df))
 print("Columns:", list(df.columns))
 print()
 
-print("--- DATA INFO ---")
-print(df.info())
-print()
-
-print("--- DATA STATS ---")
-print(df.describe())
+print("--- CLASS BALANCE ---")
+print(df['label'].value_counts())
 print()
 
 print("--- MISSING VALUES ---")
 print(df.isna().sum())
 print()
 
-print("--- FIRST ROW ---")
-print(df.iloc[0])
+print("--- FIRST 3 ROWS ---")
+print(df.head(3))

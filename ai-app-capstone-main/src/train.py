@@ -1,3 +1,4 @@
+from models.model import MLP
 import pandas as pd
 import torch
 from torch.utils.data import DataLoader, Subset
@@ -28,10 +29,20 @@ print("4. Creating dataset and DataLoader...")
 ds = DefectDataset(df)
 train_loader = DataLoader(Subset(ds, train_idx), batch_size=32, shuffle=True)
 
-print("5. Running one epoch of training...")
+print("5. Creating the model...")
+model = MLP(in_features=6, hidden_sizes=(8,), num_classes=5)
+
+loss_fn = torch.nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
+
+print("6. Running one epoch of training...")
 for batch_x, batch_y in train_loader:
-    print("Batch X shape:", batch_x.shape)
-    print("Batch Y shape:", batch_y.shape)
+    optimizer.zero_grad()
+    logits = model(batch_x)
+    loss = loss_fn(logits, batch_y)
+    loss.backward()
+    optimizer.step()
+    print("Loss:", loss.item())
     break
 
 print("SUCCESS! The data pipeline works.")

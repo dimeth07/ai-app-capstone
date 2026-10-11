@@ -12,3 +12,9 @@
 - Result: Checkpoint F passed — data loads.
 - Next: Build a dumb baseline in W3.
 - Blocked: Nothing.
+
+## Week 3
+- Did: Built the data pipeline. Created generate_data.py, src/data/dataset.py, src/train.py, and data_card.md.
+- Result: Data loads, cleans, and feeds into a PyTorch DataLoader. One epoch runs without errors.
+- Next: Build the baseline model in Week 4.
+- Blocked: Nothing.
